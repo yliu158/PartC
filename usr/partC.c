@@ -45,7 +45,8 @@ int main(){
 	close(fd);
 
 	for(i=0; i < N; i++) {
-		printf("Time: %ld, %s\n", gtodTimes[i].tv_sec, procClockTimes[i]);
+		printf("Current Kernel Time: %ld\n", gtodTimes[i].tv_sec);
+		printf("getnstimeofday: %s\n", procClockTimes[i]);
 		/* fix the output format appropriately in the above line */
 	}
 	for(i = 0; i < N; i++) {
