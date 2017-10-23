@@ -6,17 +6,13 @@
 #include <asm/uaccess.h>
 
 #include <linux/miscdevice.h>
+#include <linux/fs.h>
 
 MODULE_LICENSE("GPL");            ///< The license type -- this affects available functionality
 MODULE_AUTHOR("Yang Liu");    ///< The author -- visible when you use modinfo
 
 
-static struct file_operations my_fops = {
-  .owner = THIS_MODULE,
-  .open = my_open,
-  .release = my_close,
-  // .read = my_read,
-};
+static struct file_operations my_fops;
 
 static struct miscdevice my_misc_device = {
   .minor = MISC_DYNAMIC_MINOR,
@@ -31,9 +27,12 @@ static ssize_t my_read(  struct file *file,
   loff_t * off);
 static int my_close(struct inode *inodep, struct file *filep);
 
-
-
-
+static struct file_operations my_fops = {
+  .owner = THIS_MODULE,
+  .open = my_open,
+  .release = my_close,
+  // .read = my_read,
+};
 
 
 static int __init my_module_init() {
