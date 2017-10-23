@@ -4,6 +4,9 @@
 #include <linux/kernel.h>         // Contains types, macros, functions for the kernel
 #include <linux/fs.h>             // Header for the Linux file system support
 #include <asm/uaccess.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 MODULE_LICENSE("GPL");            ///< The license type -- this affects available functionality
 MODULE_AUTHOR("Yang Liu");    ///< The author -- visible when you use modinfo
@@ -39,13 +42,12 @@ static ssize_t my_read(
   if (access_ok(VERIFY_READ, my_misc_device, size)){
     struct timespec current_time = current_kernel_time();
     char* buf = (char*)kmalloc(size, GFP_KERNEL);
-    snprintf(buf, size, “Hello World\n”);
 
     int cp = copy_to_user(out, buf, strlen(buf)+1);
     if (cp > 0) {
       return cp;
     }
-    printk(KERN_ALERT "current_kernel_time:%ld\n", current_time->tv_sec);
+    snprintf(buf, "current_kernel_time:%ld\n", current_time.tv_sec,size);
     free(buf);
     return 0;
   } else {
