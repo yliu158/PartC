@@ -30,10 +30,8 @@ static ssize_t my_read(
  // if (access_ok(VERIFY_READ, my_misc_device, size)){
     struct timespec current_time = current_kernel_time();
     char* buf = (char*)kmalloc(size, GFP_KERNEL);
-
-    snprintf(buf, "current_kernel_time:%ld\n", current_time.tv_sec,size);
+    snprintf(buf, size, "current_kernel_time:%ld\n", current_time.tv_sec);
     kfree(buf);
-
     cp = copy_to_user(out, buf, strlen(buf)+1);
     if (cp > 0) {
 	return cp;
@@ -42,14 +40,17 @@ static ssize_t my_read(
   } else {
     return EFAULT;
   }
+  return 0;
 }
 
 static int my_open(struct miscdevice* my_misc_device, struct file * filep) {
   printk(KERN_ALERT "Char Device has been opened.\n");
+  return 0;
 }
 
 static int my_close(struct miscdevice* my_misc_device, struct file *filep) {
   printk(KERN_ALERT "Char Device successfully closed.\n");
+  return 0;
 }
 
 static struct file_operations my_fops = {
