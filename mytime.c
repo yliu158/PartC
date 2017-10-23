@@ -75,6 +75,7 @@ static int __init my_init(void) {
 
 static void __exit my_exit(void) {
   misc_deregister(&my_misc_device);
+  printk(KERN_ALERT "Exit mytime.\n");
 }
 
 
