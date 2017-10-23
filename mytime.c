@@ -73,5 +73,5 @@ static int my_close(struct miscdevice* my_misc_device, struct file *filep) {
   printk(KERN_ALERT "Char Device successfully closed.\n");
 }
 
-module_init(my_module_init);
+module_init(my_init);
 module_exit(my_exit);
