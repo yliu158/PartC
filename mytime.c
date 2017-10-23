@@ -71,5 +71,5 @@ static int my_close(struct inode *inodep, struct file *filep) {
   printk(KERN_ALERT "Char Device successfully closed.\n");
 }
 
-module_init(__init);
-module_exit(__exit);
+module_init(my_module_init);
+module_exit(my_exit);
