@@ -36,7 +36,7 @@ static struct file_operations my_fops = {
 };
 
 
-static int __init my_module_init() {
+static int __init my_init() {
   misc_register(&my_misc_device);
 }
 
