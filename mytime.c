@@ -13,13 +13,6 @@ MODULE_LICENSE("GPL");            ///< The license type -- this affects availabl
 MODULE_AUTHOR("Yang Liu");    ///< The author -- visible when you use modinfo
 
 
-static struct file_operations my_fops;
-
-static struct miscdevice my_misc_device = {
-  .minor = MISC_DYNAMIC_MINOR,
-  .name = "my device",
-  .fops = &my_fops
-};
 
 static int my_open(struct miscdevice * my_misc_device, struct file *);
 static ssize_t my_read(  struct file *file,
@@ -33,6 +26,12 @@ static struct file_operations my_fops = {
   .open = my_open,
   .release = my_close,
   // .read = my_read,
+};
+
+static struct miscdevice my_misc_device = {
+  .minor = MISC_DYNAMIC_MINOR,
+  .name = "my device",
+  .fops = &my_fops
 };
 
 
