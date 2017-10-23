@@ -10,12 +10,16 @@
 #define N 100
 #define MAX_LENGTH 100
 #define O_RDONL 
-
-struct timeval gtodTimes[N];
-char *procClockTimes[N];
+#define MEMORY_SIZE 256
 
 int main(){
 	int i;	
+	
+	struct timeval gtodTimes[N];
+	char *procClockTimes[N];
+	for (i = 0; i < N; i++) {
+		procClockTimes[i] =(char *) malloc(MEMORY_SIZE);
+	}
 	/* allocate memory for character buffers HERE before you use them */
 	int fd = open("/dev/mytime", O_RDONLY);
 	/* check for errors HERE */
@@ -37,5 +41,8 @@ int main(){
 	for(i=0; i < N; i++) {
 		printf("Time: %ld, %c", gtodTimes[i], procClockTimes[i]);
 		/* fix the output format appropriately in the above line */
-	}	
+	}
+	for(i = 0; i < N; i++) {
+		free(procClockTimes[i]);
+	}
 }
