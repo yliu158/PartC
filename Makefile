@@ -10,7 +10,6 @@ ifeq ($(KERNELRELEASE),)
 	# You should set KERNELDIR in the environment if it's elsewhere
 	KERNELDIR ?= /lib/modules/$(shell uname -r)/build
 
-	#KERNLDIR ?= /usr/src/4.4.1
 	# The current directory is passed to sub-makes as argument
 	PWD := $(shell pwd)
 
@@ -27,5 +26,5 @@ clean:
 
 else
 	# called from kernel build system: just declare what our modules are
-	obj-m := partC.o
+	obj-m := mytime.o 
 endif
