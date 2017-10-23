@@ -9,6 +9,13 @@
 MODULE_LICENSE("GPL");            ///< The license type -- this affects available functionality
 MODULE_AUTHOR("Yang Liu");    ///< The author -- visible when you use modinfo
 
+static int my_open(struct miscdevice *, struct file *);
+static ssize_t my_read(  struct file *file,
+  char __user * out,
+  size_t size,
+  loff_t * off);
+static int my_close(struct inode *inodep, struct file *filep);
+
 
 static struct file_operations my_fops = {
   .owner = THIS_MODULE,
@@ -23,12 +30,6 @@ static struct miscdevice my_misc_device = {
   .fops = &my_fops
 };
 
-static int my_open(struct miscdevice *, struct file *);
-static ssize_t my_read(  struct file *file,
-  char __user * out,
-  size_t size,
-  loff_t * off);
-static int my_close(struct inode *inodep, struct file *filep);
 
 static int __init my_module_init() {
   misc_register(&my_misc_device);
