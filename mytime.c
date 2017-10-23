@@ -57,7 +57,7 @@ static struct file_operations my_fops = {
   .owner = THIS_MODULE,
   .open = my_open,
   .release = my_close,
-  // .read = my_read,
+  .read = my_read,
 };
 
 static struct miscdevice my_misc_device = {
@@ -69,6 +69,7 @@ static struct miscdevice my_misc_device = {
 
 static int __init my_init(void) {
   misc_register(&my_misc_device);
+  return 0;
 }
 
 static void __exit my_exit(void) {
