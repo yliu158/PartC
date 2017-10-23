@@ -5,6 +5,7 @@
 #include <linux/fs.h>             // Header for the Linux file system support
 #include <asm/uaccess.h>
 
+#include <linux/miscdevice.h>
 
 MODULE_LICENSE("GPL");            ///< The license type -- this affects available functionality
 MODULE_AUTHOR("Yang Liu");    ///< The author -- visible when you use modinfo
