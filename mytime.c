@@ -4,8 +4,6 @@
 #include <linux/kernel.h>         // Contains types, macros, functions for the kernel
 #include <linux/fs.h>             // Header for the Linux file system support
 #include <asm/uaccess.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 
 MODULE_LICENSE("GPL");            ///< The license type -- this affects available functionality
