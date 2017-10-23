@@ -7,6 +7,7 @@
 
 #include <linux/miscdevice.h>
 #include <linux/fs.h>
+#include <linux/slab.h>
 
 MODULE_LICENSE("GPL");            ///< The license type -- this affects available functionality
 MODULE_AUTHOR("Yang Liu");    ///< The author -- visible when you use modinfo
