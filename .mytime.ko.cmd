@@ -1,1 +1,0 @@
-cmd_/home/csvb/linux-4.4.1/module/PartC/mytime.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/csvb/linux-4.4.1/module/PartC/mytime.ko /home/csvb/linux-4.4.1/module/PartC/mytime.o /home/csvb/linux-4.4.1/module/PartC/mytime.mod.o

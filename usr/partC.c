@@ -7,9 +7,9 @@
 #include <fcntl.h>
 
 /* allocate memory for character buffers HERE before you use them */
-#define N 100
+#define N 10
 #define MAX_LENGTH 100
-#define O_RDONL 
+//#define O_RDONL 
 
 struct timeval gtodTimes[N];
 char *procClockTimes[N];
@@ -19,7 +19,9 @@ int main(){
 	/* allocate memory for character buffers HERE before you use them */
 	int fd = open("/dev/mytime", O_RDONLY);
 	/* check for errors HERE */
-
+	if (fd < 0) {
+		printf("Fail to open file.\n");
+	}
 	for( i=0; i < N; i++)
 	{
 		gettimeofday(&gtodTimes[i], 0);
@@ -35,7 +37,7 @@ int main(){
 	close(fd);
 
 	for(i=0; i < N; i++) {
-		printf("Time: %ld, %c", gtodTimes[i], procClockTimes[i]);
+		printf("Time: %ld, %s\n", gtodTimes[i].tv_sec, procClockTimes[i]);
 		/* fix the output format appropriately in the above line */
 	}	
 }
