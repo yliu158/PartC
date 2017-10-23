@@ -13,13 +13,44 @@ MODULE_LICENSE("GPL");            ///< The license type -- this affects availabl
 MODULE_AUTHOR("Yang Liu");    ///< The author -- visible when you use modinfo
 
 
+// static int my_open(struct miscdevice * my_misc_device, struct file *)
+// static ssize_t my_read(  struct file *file,
+//   char __user * out,
+//   size_t size,
+//   loff_t * off);
+// static int my_close(struct miscdevice* my_misc_device, struct file *filep);
 
-static int my_open(struct miscdevice * my_misc_device, struct file *);
-static ssize_t my_read(  struct file *file,
+static ssize_t my_read(
+  struct file *file,
   char __user * out,
   size_t size,
-  loff_t * off);
-static int my_close(struct miscdevice* my_misc_device, struct file *filep);
+  loff_t * off) {
+    int cp;
+    if (1){
+ // if (access_ok(VERIFY_READ, my_misc_device, size)){
+    struct timespec current_time = current_kernel_time();
+    char* buf = (char*)kmalloc(size, GFP_KERNEL);
+
+    snprintf(buf, "current_kernel_time:%ld\n", current_time.tv_sec,size);
+    kfree(buf);
+
+    cp = copy_to_user(out, buf, strlen(buf)+1);
+    if (cp > 0) {
+	return cp;
+    }
+    return 0;
+  } else {
+    return EFAULT;
+  }
+}
+
+static int my_open(struct miscdevice* my_misc_device, struct file * filep) {
+  printk(KERN_ALERT "Char Device has been opened.\n");
+}
+
+static int my_close(struct miscdevice* my_misc_device, struct file *filep) {
+  printk(KERN_ALERT "Char Device successfully closed.\n");
+}
 
 static struct file_operations my_fops = {
   .owner = THIS_MODULE,
@@ -43,36 +74,7 @@ static void __exit my_exit(void) {
   misc_deregister(&my_misc_device);
 }
 
-static ssize_t my_read(
-  struct file *file,
-  char __user * out,
-  size_t size,
-  loff_t * off) {
-    if (1){
- // if (access_ok(VERIFY_READ, my_misc_device, size)){
-    struct timespec current_time = current_kernel_time();
-    char* buf = (char*)kmalloc(size, GFP_KERNEL);
 
-    snprintf(buf, "current_kernel_time:%ld\n", current_time.tv_sec,size);
-    kfree(buf);
-
-    int cp = copy_to_user(out, buf, strlen(buf)+1);
-    if (cp > 0) {
-	return cp;
-    }
-    return 0;
-  } else {
-    return EFAULT;
-  }
-}
-
-static int my_open(struct miscdevice* my_misc_device, struct file * filep) {
-  printk(KERN_ALERT "Char Device has been opened.\n");
-}
-
-static int my_close(struct miscdevice* my_misc_device, struct file *filep) {
-  printk(KERN_ALERT "Char Device successfully closed.\n");
-}
 
 module_init(my_init);
 module_exit(my_exit);
