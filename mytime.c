@@ -43,7 +43,7 @@ static ssize_t my_read(
   return 0;
 }
 
-static int my_open(struct miscdevice* my_misc_device, struct file * filep) {
+static int my_open (struct inode * id, struct file * filep){
   printk(KERN_ALERT "Char Device has been opened.\n");
   return 0;
 }
@@ -68,6 +68,7 @@ static struct miscdevice my_misc_device = {
 
 
 static int __init my_init(void) {
+  printk(KERN_ALERT "Init mytime sucessfully.\n");
   misc_register(&my_misc_device);
   return 0;
 }
