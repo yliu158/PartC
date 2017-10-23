@@ -35,7 +35,7 @@ static struct miscdevice my_misc_device = {
 };
 
 
-static int __init my_init() {
+static int __init my_init(void) {
   misc_register(&my_misc_device);
 }
 
@@ -48,17 +48,18 @@ static ssize_t my_read(
   char __user * out,
   size_t size,
   loff_t * off) {
-
-  if (access_ok(VERIFY_READ, my_misc_device, size)){
+    if (1){
+ // if (access_ok(VERIFY_READ, my_misc_device, size)){
     struct timespec current_time = current_kernel_time();
     char* buf = (char*)kmalloc(size, GFP_KERNEL);
 
+    snprintf(buf, "current_kernel_time:%ld\n", current_time.tv_sec,size);
+    kfree(buf);
+
     int cp = copy_to_user(out, buf, strlen(buf)+1);
     if (cp > 0) {
-      return cp;
+	return cp;
     }
-    snprintf(buf, "current_kernel_time:%ld\n", current_time.tv_sec,size);
-    free(buf);
     return 0;
   } else {
     return EFAULT;
