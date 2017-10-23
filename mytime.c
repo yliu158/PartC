@@ -28,9 +28,14 @@ static ssize_t my_read(
     int cp;
     if (1){
  // if (access_ok(VERIFY_READ, my_misc_device, size)){
+	struct timespec now;	   
     struct timespec current_time = current_kernel_time();
+    getnstimeofday(&now);
     char* buf = (char*)kmalloc(size, GFP_KERNEL);
-    snprintf(buf, size, "current_kernel_time:%ld\n", current_time.tv_sec);
+    snprintf(buf, size, "current_kernel_time:%ld %ld\ngetnstimeofday: %ld %ld \n", 
+	     current_time.tv_sec, 
+	     current_time.tv_nsec,
+	    now.tv_sec, now.tv_nsec);
     kfree(buf);
     cp = copy_to_user(out, buf, strlen(buf)+1);
     if (cp > 0) {
