@@ -48,7 +48,7 @@ static int my_open(struct miscdevice* my_misc_device, struct file * filep) {
   return 0;
 }
 
-static int my_close(struct miscdevice* my_misc_device, struct file *filep) {
+static int my_close(struct inode * id, struct file * filep) {
   printk(KERN_ALERT "Char Device successfully closed.\n");
   return 0;
 }
