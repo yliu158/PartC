@@ -26,8 +26,8 @@ static ssize_t my_read(
   size_t size,
   loff_t * off) {
     int cp;
-    if (1){
- // if (access_ok(VERIFY_READ, my_misc_device, size)){
+    //if (1){
+ if (access_ok(VERIFY_READ, my_misc_device, size)){
     char* buf;
     struct timespec now;	   
     struct timespec current_time = current_kernel_time();
