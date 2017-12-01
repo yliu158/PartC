@@ -9,11 +9,18 @@
 #include <linux/fs.h>
 #include <linux/slab.h>
 
+static int buffer_size;
+module_param(buffer_size, int, 0000);
+
 MODULE_LICENSE("GPL");            ///< The license type -- this affects available functionality
 MODULE_AUTHOR("Yang Liu");    ///< The author -- visible when you use modinfo
 
 static ssize_t my_read(struct file *file, char __user * out, size_t size, loff_t * off) {
   return 0;
+}
+
+static ssize_t my_write(struct file *filep, const char *buffer, size_t len, loff_t *offset) {
+	  return 0;
 }
 
 static int my_open (struct inode * id, struct file * filep){
